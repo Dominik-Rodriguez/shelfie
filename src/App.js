@@ -23,8 +23,8 @@ class App extends Component {
     .catch(err => console.log(err));
   }
 
-  newItem(product){
-    axios.post('/api/products', {url: this.url, name: this.name, price: this.price})
+  newItem(item){
+    axios.post('/api/product', {item: item})
     .then(res => {
       this.setState({inventory: res.data})
     }).catch(err => console.log(err));
@@ -34,7 +34,7 @@ class App extends Component {
     return (
       <div className="App">
         <Header />
-        <body className="body">
+        <div className="body">
         <Dashboard
         inventory={this.state.inventory}>
           <Product />
@@ -42,7 +42,7 @@ class App extends Component {
         <Form 
           newItem={this.newItem}
         />
-        </body>
+        </div>
       </div>
     );
   }

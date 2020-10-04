@@ -6,4 +6,6 @@
 INSERT INTO inventory 
 ( url, name, price ) 
 VALUES 
-( $1, $2, $3);
+( $1, $2, $3)
+
+returning *;

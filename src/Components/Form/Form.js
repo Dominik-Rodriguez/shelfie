@@ -7,7 +7,7 @@ export default class Form extends Component{
         this.state = {
             url: '',
             name: '',
-            price: ''
+            price: 0
         }
         this.imageurl = this.imageurl.bind(this);
         this.nameInput = this.nameInput.bind(this);
@@ -20,7 +20,7 @@ export default class Form extends Component{
     handleReset(){
         this.setState({url: ''})
         this.setState({name: ''})
-        this.setState({price: ''})
+        this.setState({price: 0})
     }
 
     imageurl(e){
@@ -36,14 +36,10 @@ export default class Form extends Component{
     }
 
     newItems = () => {
-        const {product} = this.state;
         let newItem = {
-            // url: product.url,
-            url: 'test',
-            // name: product.name,
-            name: 'test',
-            // price: product.price
-            price: 'test'
+            url: this.state.url,
+            name: this.state.name,
+            price: this.state.price
         }
         this.props.newItem(newItem);
     }
