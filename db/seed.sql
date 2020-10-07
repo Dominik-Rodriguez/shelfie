@@ -1,5 +1,6 @@
 create table inventory(
-    url: text,
-    name: varchar(200),
-    price: varchar(50)
+    id serial primary key,
+    url text,
+    name varchar(200),
+    price varchar(50)
 );

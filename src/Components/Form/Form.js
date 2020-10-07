@@ -1,5 +1,6 @@
 // import e from 'express';
 import React, {Component} from 'react';
+import axios from 'axios';
 
 export default class Form extends Component{
     constructor(props){
@@ -13,8 +14,6 @@ export default class Form extends Component{
         this.nameInput = this.nameInput.bind(this);
         this.priceChange = this.priceChange.bind(this);
         this.handleReset = this.handleReset.bind(this);
-        // this.newItems = this.newItems.bind(this);
-        // this.props.newItem();
     }
 
     handleReset(){
@@ -35,14 +34,28 @@ export default class Form extends Component{
         this.setState({price: e.target.value})
     }
 
-    newItems = () => {
+    newItems = (url, name, price) => {
         let newItem = {
-            url: this.state.url,
-            name: this.state.name,
-            price: this.state.price
+            url: url,
+            name: name,
+            price: price
         }
-        this.props.newItem(newItem);
+        this.newItem(newItem);
     }
+
+    getItem(){
+        axios.get('/api/products')
+        .then(res => {
+          this.setState({inventory: res.data})
+        }).catch(err => console.log(err));
+      }
+
+    newItem(item){
+        axios.post('/api/product', {url: item.url, name: item.name, price: item.price})
+        .then(res => {
+          this.setState({inventory: res.data})
+        }).catch(err => console.log(err));
+      }
 
     render(){
         console.log(this.state.url)
@@ -57,7 +70,7 @@ export default class Form extends Component{
                 <input type="text" placeholder="price" onChange={this.priceChange} value={this.state.price}></input>
                 <div className="btncontainer">
                     <button onClick={() => {this.handleReset()}} className="btn">Cancel</button>
-                    <button onClick={() => {this.newItems(this.state.url, this.state.name, this.state.price)}}className="btn">Add to Inventory</button>
+                    <button onClick={() => {this.newItems(this.state.url, this.state.name, this.state.price); this.getItem()}} className="btn">Add to Inventory</button>
                 </div>
             </div>
         )
